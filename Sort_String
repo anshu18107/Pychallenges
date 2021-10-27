@@ -1,0 +1,12 @@
+# Sort the string : such that 
+# Input: banana ORANGE apple
+# Output: apple banana ORANGE
+
+def sort_words(s = input("Enter the string")):
+    words = s.split()
+    words = [w.lower() + w for w in words]
+    words.sort()
+    words = [w[len(w)//2:] for w in words]
+    return ' '.join(words)
+
+print(sort_words())
