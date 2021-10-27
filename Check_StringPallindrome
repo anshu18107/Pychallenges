@@ -1,0 +1,13 @@
+def isPalindrome(s):
+  return s == s[::-1]
+  
+s = input("Please Enter your string")
+
+ans = isPalindrome(s)
+
+if(ans):
+  Print("The string is Palindrome")
+
+else:
+  Print("The string is not a Palindrome")
+  
