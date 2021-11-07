@@ -1,0 +1,11 @@
+# Swapping two numbers without using another variable
+print("Enter the 1st Number")
+num1 = int(input())
+print("Enter the 2nd Number")
+num2 = int(input())
+num1 = num1 + num2
+num2 = num1 - num2
+num1 = num1 - num2
+print("The numbers after swapping:")
+print(num1)
+print(num2)
