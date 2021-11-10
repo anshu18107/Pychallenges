@@ -1,0 +1,10 @@
+def rev_s(string):
+    rev = ""
+    for i in string:
+        rev = i + rev
+    print("Reversed string:",rev)
+
+s = input("Enter the string:")
+rev_s(s)
+
+
