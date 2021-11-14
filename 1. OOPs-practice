@@ -1,0 +1,60 @@
+class Professor:
+    def __init__(self, pid, pname, sdict):
+        self.profId = pid
+        self.profName = pname
+        self.subjectDict = sdict
+
+class University:
+
+    def getTotalExperience(self, plist, pid):
+        exp = 0
+        for i in plist:
+            if i.profId == pid:
+                for y in i.subjectDict.values():
+                    exp += y
+        return exp
+
+    def selectSeniorProfessorBySubject(self, plist, sname):
+        maxi = 0
+        prslt = None
+        for prof in plist:
+            for name, exp in prof.subjectsDict.items():
+                if name.lower() == sname.lower():
+                    if exp > maxi:
+                        maxi = exp
+                        prslt = prof
+
+        return prslt
+
+
+if __name__ == '__main__':
+    count = int(input())
+    plist = []
+    for i in range(count):
+        pid = int(input())
+        pname = input()
+        num = int(input())
+        sdict = {}
+        for j in range(num):
+            sname = input()
+            yoe = int(input())
+            sdict[sname] = yoe
+        prof = Professor(pid,pname,sdict)
+        plist.append(prof)
+
+    univ = University()
+
+    inpId = int(input())
+    inSname = input()
+    print(univ.getTotalExperience(plist, inpId))
+    rslt = univ.selectSeniorProfessorBySubject(plist,inSname)
+    if rslt is None:
+        print("No Professor")
+    else:
+        print(rslt.profId, rslt.profName, rslt.subjectsDict)
+
+
+
+
+
+
