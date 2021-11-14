@@ -18,7 +18,7 @@ class University:
         maxi = 0
         prslt = None
         for prof in plist:
-            for name, exp in prof.subjectsDict.items():
+            for name, exp in prof.subjectDict.items():
                 if name.lower() == sname.lower():
                     if exp > maxi:
                         maxi = exp
@@ -28,30 +28,30 @@ class University:
 
 
 if __name__ == '__main__':
-    count = int(input())
+    count = int(input("Enter the Count of Profs:"))
     plist = []
     for i in range(count):
-        pid = int(input())
-        pname = input()
-        num = int(input())
+        pid = int(input("Enter The Prof ID:"))
+        pname = input("Enter The Prof NAME:")
+        num = int(input("Enter The Number of Subjects:"))
         sdict = {}
         for j in range(num):
-            sname = input()
-            yoe = int(input())
+            sname = input("Subject Name:")
+            yoe = int(input("Years of Exp:"))
             sdict[sname] = yoe
         prof = Professor(pid,pname,sdict)
         plist.append(prof)
 
     univ = University()
 
-    inpId = int(input())
-    inSname = input()
+    inpId = int(input("Enter the Id to search:"))
+    inSname = input("Enter the subject name:")
     print(univ.getTotalExperience(plist, inpId))
     rslt = univ.selectSeniorProfessorBySubject(plist,inSname)
     if rslt is None:
         print("No Professor")
     else:
-        print(rslt.profId, rslt.profName, rslt.subjectsDict)
+        print(rslt.profId, rslt.profName, rslt.subjectDict)
 
 
 
