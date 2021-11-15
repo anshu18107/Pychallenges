@@ -1,0 +1,5 @@
+# "Hello, Thank you" Adam said.
+#"You're very welcome, Have a good day!" Ron responded.
+
+print("\"Hello, Thank you\" Adam said.\n")
+print("\"You\'re very welcome, Have a good day!\" Ron responded.\n")
