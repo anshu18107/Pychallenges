@@ -1,0 +1,54 @@
+class Account:
+    def __init__(self, acc_no, name, balance):
+        self.acc_no = acc_no
+        self.name = name
+        self.balance = balance
+
+    def deposite_mny(self, dep_amt):
+        self.balance += dep_amt
+        return self.balance
+
+    def withdraw_mny(self, with_amt):
+        if self.balance - with_amt >= 1000:
+            self.balance -= with_amt
+            return self.balance
+        else:
+            return 0
+
+
+if __name__ == '__main__':
+    n = int(input("The number of accounts:"))
+    plist = []
+    for i in range(n):
+        acc_no = int(input("Enter the Account no. ->"))
+        name = input("Enter the Name of the Account Holder ->")
+        balance = float(input("Enter the Balance ->"))
+        account = Account(acc_no, name, balance)
+        plist.append(account)
+
+    m = int(input("ENTER THE ACCOUNT NO. TO MAKE CHANGES: "))
+    f = int(input("Enter 1 - Deposit  "
+                  "Enter 2 - Withdraw "
+                  "Enter 3 - Exit :   "
+                  ))
+    if f == 1:
+        for i in plist:
+            if i.acc_no == m:
+                d = int(input("Enter the amount to deposit: "))
+                b = i.deposite_mny(d)
+                print("The New balance is:")
+                print(b)
+
+    elif f == 2:
+        for i in plist:
+            if i.acc_no == m:
+                w = int(input("Enter the amount to Withdraw: "))
+                b = i.withdraw_mny(w)
+                if b == 0:
+                    print("NOT ENOUGH BALANCE:")
+                else:
+                    print("The New balance is:")
+                    print(b)
+
+    else:
+        print("Please VISIT AGAIN ")
