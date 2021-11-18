@@ -1,0 +1,20 @@
+def vowelString(s):
+    lst = []
+    for i in s:
+        j = i.lower()
+        if 'a' in j or 'e' in j or 'i' in j or 'o' in j or 'u' in j:
+            lst.append(i)
+    return lst
+
+
+if __name__ == '__main__':
+    n = int(input("Enter the number of strings: "))
+    li = []
+    for i in range(n):
+        li.append(input(f'Enter the string {i+1} : '))
+    result = vowelString(li)
+    if len(result) == 0:
+        print('No vowel String')
+    else:
+        for i in result:
+            print(i)
