@@ -1,0 +1,43 @@
+class Employee:
+    def __init__(self, emp_id, emp_name, emp_role, emp_salary):
+        self.emp_Id = emp_id
+        self.emp_name = emp_name
+        self.emp_role = emp_role
+        self.emp_salary = emp_salary
+
+    def increment_salary(self, inc):
+        return self.emp_salary + (self.emp_salary*inc)/100
+
+
+class Organization:
+    def __init__(self, org_name, lst_emp):
+        self.org_name = org_name
+        self.emp_list = lst_emp
+
+    def calculate_salary(self, emp_rol, n):
+        final = []
+        for i in self.emp_list:
+            if emp_rol == i.emp_role:
+                i.emp_salary = i.increment_salary(n)
+                final.append(i)
+        return final
+
+
+if __name__ == '__main__':
+    org_name = input("Enter the organization name: ")
+    count = int(input("Enter the No.of Employees: "))
+    emp_list = []
+    for i in range(count):
+        emp_id = int(input("Enter the employee id: "))
+        emp_name = input("Enter the employee name: ")
+        emp_role = input("Enter the employee role: ")
+        emp_salary = int(input("Enter the employee salary: "))
+        emp_list.append(Employee(emp_id, emp_name, emp_role, emp_salary))
+
+    o = Organization(org_name, emp_list)
+    role = input("Enter the role of the Employee to increment: ")
+    percent = int(input("Enter the percentage increment: "))
+    result = o.calculate_salary(role, percent)
+    for i in result:
+        print(i.emp_name)
+        print(i.emp_salary)
