@@ -1,0 +1,41 @@
+class Passenger:
+    def __init__(self, p_id, name, gender, cost):
+        self.p_id = p_id
+        self.name = name
+        self.gender = gender
+        self.cost = cost
+
+    def discount_price(self,discount):
+        t = self.cost - self.cost*discount/100
+        return t
+
+
+class Train:
+    def __init__(self, p_list):
+        self.plist = p_list
+
+    def discount (self, req_id, discount):
+        for i in self.plist:
+            if req_id == i.p_id:
+                i.cost = i.discount_price(discount)
+                return i.cost
+        return 1
+
+
+if __name__ == '__main__':
+    n = int(input())
+    p_list = []
+    for i in range(n):
+        p_id = int(input(f'Enter the {i+1} passenger ID :'))
+        name = input(f'Enter the {i+1} passenger Name :')
+        gender = input(f'Enter the {i+1} passenger Gender :')
+        cost = int(input(f'Enter the {i+1} passenger Cost :'))
+        p_list.append(Passenger(p_id, name, gender, cost))
+    o = Train(p_list)
+    req_id = int(input("Enter the Required Passenger ID for Discount: "))
+    discount = int(input("Enter the Discount Percentage: "))
+    result = o.discount(req_id, discount)
+    if result != 1:
+        print(f'The cost after discount = {result}')
+    else:
+        print('No Name or No Value')
