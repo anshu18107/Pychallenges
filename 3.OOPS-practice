@@ -1,0 +1,45 @@
+class Employee:
+    def __init__(self, eno, ename, leaves):
+        self.emp_no = eno
+        self.emp_name = ename
+        self.leaves = leaves
+
+
+class Company:
+    def __init__(self, cn, eps):
+        self.cname = cn
+        self.emps = eps
+
+    def leave_available(self, en, typlv):
+        for i in self.emps:
+            if i.emp_no == en :
+                return i.leaves[typlv]
+
+    def leave_permission(self, en, typlv, nlv):
+        for i in self.emps:
+            if i.emp_no == en:
+                if i.leaves[typlv] >= nlv:
+                    print("Granted")
+                else:
+                    print("Rejected")
+
+
+if __name__ == '__main__':
+    c = int(input("Input the no.of Employees: "))
+    emps = []
+
+    for i in range(c):
+        leaves = {}
+        emp_no = int(input("Enter the Employee_Id: "))
+        emp_name = input("Enter the Employee_Name: ")
+        leaves['A'] = int(input("Input the no.of A type leaves: "))
+        leaves['B'] = int(input("Input the no.of B type leaves: "))
+        leaves['C'] = int(input("Input the no.of C type leaves: "))
+        employee = Employee(emp_no, emp_name, leaves)
+        emps.append(employee)
+    emp_id = int(input("Enter the emp-id of the Employee: "))
+    type_of_leaves = input("Enter the type of leave: ")
+    leaves_duration = int(input("Enter the Leave duration: "))
+    z = Company('TCS', emps)
+    print("The no.of leaves of type",type_of_leaves, " = ",(z.leave_available(emp_id, type_of_leaves)))
+    print(z.leave_permission(emp_id, type_of_leaves, leaves_duration))
