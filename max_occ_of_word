@@ -1,0 +1,28 @@
+def count_words(str1):
+    lst = str1.split()
+    s = set(lst)
+    dic = {}
+    for i in s:
+        dic[i] = lst.count(i)
+    return dic
+
+
+def maxi_occ_word(str):
+    d = count_words(str)
+    words = []
+    co = []
+    print(d.items())
+    for w,c in d.items():
+        words.append(w)
+        co.append(c)
+    print(words)
+    print(co)
+    ele = max(co)
+    ind = co.index(ele)
+    return words[ind]
+
+
+if __name__ == "__main__":
+    str1 = input()
+    print(count_words(str1))
+    print(maxi_occ_word(str1))
