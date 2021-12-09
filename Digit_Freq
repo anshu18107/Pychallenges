@@ -1,0 +1,12 @@
+def freq(n,d):
+    count = 0
+    while(n>0):
+        temp = n%10
+        if temp == d:
+            count += 1
+        n = n//10
+    return count
+
+n = int(input("Enter the Number: "))
+d = int(input("Enter the digit whose Frequency to find out: "))
+print(f"The frequency is :{freq(n,d)}")
