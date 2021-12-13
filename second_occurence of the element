@@ -1,0 +1,14 @@
+def getIndex(lst, val):
+    if lst.count(val) >= 2:
+        return lst.index(val, lst.index(val) + 1)
+    else:
+        return 0
+
+
+if __name__ == "__main__":
+    n = int(input())
+    lst = []
+    for i in range(n):
+        lst.append(int(input()))
+    val = int(input())
+    print(getIndex(lst, val))
