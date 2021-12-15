@@ -1,0 +1,54 @@
+class Player:
+    def __init__(self, name, country, age, matches, runs, wickets):
+        self.name = name
+        self.country = country
+        self.age = age
+        self.matches = matches
+        self.runs = runs
+        self.wickets = wickets
+
+
+class Team(Player):
+    def __init__(self, player_lst):
+        self.player_lst = player_lst
+
+    def minRuns(self):
+        mini = ply = self.player_lst[0]
+        for i in self.player_lst:
+            if i.runs < mini.runs:
+                mini = i.runs
+                ply = i
+        return ply
+
+    def maxWickets(self):
+        maxi = ply = self.player_lst[0]
+        for i in self.player_lst:
+            if i.wickets > maxi.wickets:
+                maxi = i.wickets
+                ply = i
+        return ply
+
+
+def main():
+    n = int(input("Enter the number of players: "))
+    player_lst = []
+    for i in range(n):
+        name = input(f"Enter the Name of the Player {i+1}: ")
+        country = input("Enter the Player's Country Name: ")
+        age = int(input("Enter the Player's Age: "))
+        matches = int(input("Enter the Player's No.of Matches: "))
+        runs = int(input("Enter the Player's Runs: "))
+        wickets = int(input("Enter the Player's Wickets: "))
+        player_lst.append(Player(name, country, age, matches, runs, wickets))
+    t = Team(player_lst)
+    ply1 = t.minRuns()
+    print(f"The player name with min runs is : {ply1.name} ")
+    print(ply1.runs)
+    print(ply1.country)
+    ply2 = t.maxWickets()
+    print(f"The player name with max wickets is : {ply2.name} ")
+    print(ply2.wickets)
+    print(ply2.country)
+
+
+if __name__ == '__main__': main()
