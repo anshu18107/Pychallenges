@@ -1,0 +1,73 @@
+class City:
+    def __init__(self, city_id, state_name, city_name, covidbeds, avlblcovbeds, ventilbeds, avlblventilbeds):
+        self.city_id = city_id
+        self.state_name = state_name
+        self.city_name = city_name
+        self.covidbeds = covidbeds
+        self.avlblcovbeds = avlblcovbeds
+        self.ventilbeds = ventilbeds
+        self.avlblventilbeds = avlblventilbeds
+
+
+class CovBedsAnalysis:
+    def __init__(self, analysis_name, city_list):
+        self.analysis_name = analysis_name
+        self.city_list = city_list
+
+    def get_StateWiseAvlblBedStats(self):
+        statewise = {}
+        for city in self.city_list:
+            if city.state_name not in statewise:
+                statewise[city.state_name] = {
+                    "total_covid": city.avlblcovbeds,
+                    "total_ventil": city.avlblventilbeds,
+                }
+            else:
+                statewise[city.state_name]["total_covid"] += city.avlblcovbeds
+                statewise[city.state_name]["total_ventil"] += city.avlblventilbeds
+
+        return [(state, statewise[state]["total_covid"], statewise[state]["total_ventil"]) for state in statewise]
+
+    def get_CiitesWithMoreThanAvgOccupiedbeds(self, state):
+        state_city_list = list(filter(lambda city: city.state_name == state, self.city_list))
+        city_count = len(state_city_list)
+        avg_occ_covbeds = sum(city.covidbeds - city.avlblcovbeds for city in state_city_list) / city_count
+        avg_occ_ventilbeds = sum(city.ventilbeds - city.avlblventilbeds for city in state_city_list) / city_count
+        res = {}
+        for city in state_city_list:
+            occ_covbeds = city.covidbeds - city.avlblcovbeds
+            occ_ventilbeds = city.ventilbeds - city.avlblventilbeds
+            if occ_covbeds > avg_occ_covbeds and occ_ventilbeds > avg_occ_ventilbeds:
+                res.update({
+                    city.city_name: (occ_covbeds, occ_ventilbeds)
+                })
+        return res
+
+
+if __name__ == '__main__':
+    n = int(input("Enter the count: "))
+    city_lst = []
+    for i in range(n):
+        city_id = int(input("Enter City-ID : "))
+        state_name = input("Enter State-Name : ")
+        city_name = input("Enter City-Name : ")
+        covidbeds = int(input("Enter the no.of Covid-Beds : "))
+        avlblcovbeds = int(input("Enter the available no.of Covid-Beds : "))
+        ventilbeds = int(input("Enter the no.of Ventilator-Beds : "))
+        avlblventilbeds = int(input("Enter the available no.of Ventilator-Beds :  "))
+        city = City(city_id, state_name, city_name, covidbeds, avlblcovbeds, ventilbeds, avlblventilbeds)
+        city_lst.append(city)
+
+    analysis_name = "Bed_Analysis"
+    cov_bed = CovBedsAnalysis(analysis_name, city_lst)
+    state = input("Enter the State for Analysis : ")
+    lst1 = cov_bed.get_StateWiseAvlblBedStats()
+    lst2 = cov_bed.get_CiitesWithMoreThanAvgOccupiedbeds(state)
+    for i in lst1:
+        print(*i)
+        # using the concept of unpacking of a tuple
+
+    if len(lst2) != 0:
+        print(lst2)
+    else:
+        print('No city Available')
