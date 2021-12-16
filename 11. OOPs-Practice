@@ -1,0 +1,34 @@
+class Account:
+    def __init__(self, acc_no, acc_name, acc_balance):
+        self.acc_no = acc_no
+        self.acc_name = acc_name
+        self.acc_balance = acc_balance
+
+    def depositAmt(self, dp):
+        self.acc_balance += dp
+
+    def withdrawAmt(self, wp):
+        if (self.acc_balance - wp) >= 1000:
+            self.acc_balance -= wp
+        else:
+            return 0
+        return 1
+
+
+def main():
+    acno = int(input("Enter the Account_No. : "))
+    acname = input("Enter the Account_Name : ")
+    acntbal = int(input("Enter the Account_Balance : "))
+    depamnt = int(input("Ente the Amount to Deposit : "))
+    withamnt = int(input("Enter the Amount to Withdraw : "))
+    obj = Account(acno, acname, acntbal)
+    obj.depositAmt(depamnt)
+    print(f"Balance after deposit: {obj.acc_balance}")
+    res = obj.withdrawAmt(withamnt)
+    if res == 1:
+        print(f"Balance after withdrawal: {obj.acc_balance}")
+    else:
+        print("Insufficient balance for withdrawal")
+
+
+if __name__ == '__main__': main()
