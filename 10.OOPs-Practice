@@ -1,0 +1,45 @@
+class Employee:
+    def __init__(self, emp_id, emp_name, emp_role, emp_salary):
+        self.emp_id = emp_id
+        self.emp_name = emp_name
+        self.emp_role = emp_role
+        self.emp_salary = emp_salary
+
+    def increase_salary(self, percent):
+        self.emp_salary += self.emp_salary*percent*0.01
+
+
+class Organisation(Employee):
+    def __init__(self, org_name, emp_list):
+        self.org_name = org_name
+        self.emp_lst = emp_list
+
+    def calculate_increment(self, role, inc_percent):
+        ep_lst = []
+        for emp in self.emp_lst:
+            if emp.emp_role == role:
+                emp.increase_salary(inc_percent)
+                ep_lst.append(emp)
+        return ep_lst
+
+
+if __name__ == '__main__':
+        count = int(input("Enter The Employee count for ABC : "))
+        emp_lst = []
+        for i in range(count):
+            emp_id = int(input(f"Enter the Emp_ID for Employee {i+1} : "))
+            emp_name = input(f"Enter the Emp_Name for Employee {emp_id} : ")
+            emp_role = input(f"Enter the Emp_Role for Employee {emp_id} : ")
+            emp_sal = int(input(f"Enter the Emp_Salary for Employee {emp_id} : "))
+            emp_lst.append(Employee(emp_id, emp_name, emp_role, emp_sal))
+
+        o = Organisation("ABC", emp_lst)
+        inp_role = input(f"Enter the Emp_Role to Increment Salary : ")
+        inp_percent = int(input(f"Enter the Increment Percentage : "))
+        result = o.calculate_increment(inp_role, inp_percent)
+
+        if len(result) != 0:
+            for i in result:
+                print(i.emp_name , i.emp_salary)
+        else:
+            print("No employee found with the given role")
