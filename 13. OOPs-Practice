@@ -1,0 +1,48 @@
+class Book:
+    def __init__(self, book_id, book_name):
+        self.book_id = book_id
+        self.book_name = book_name
+
+
+class Library:
+    def __init__(self, library_id, address, book_list):
+        self.library_id = library_id
+        self.address = address
+        self.book_list = book_list
+
+    def count_books(self, ch):
+        count = 0
+        for i in self.book_list:
+            if i.book_name.startswith(ch):
+                count += 1
+        return count
+
+    def remove_books(self, b_lst):
+        for book in b_lst:
+            for b in self.book_list:
+                if b.book_name == book:
+                    self.book_list.remove(b)
+
+
+def main():
+    books = []
+    count = int(input("Enter the count of books: "))
+    for i in range(count):
+        bid = int(input(f"Enter the book id of {i + 1} book: "))
+        bname = input(f"Enter the book name of book with book id {bid}: ")
+        b = Book(bid, bname)
+        books.append(b)
+    l = Library(123, 'Mumbai', books)
+    char = input("Enter the Character to find out book names: ")
+    count = int(input("Enter the count of books to remove: "))
+    names = []
+    for i in range(count):
+        names.append(input(f"Enter the book name of {i + 1} book to remove: "))
+    print(l.count_books(char))
+    l.remove_books(names)
+    for i in l.book_list:
+        print(i.book_name)
+
+
+if __name__ == '__main__':
+    main()
