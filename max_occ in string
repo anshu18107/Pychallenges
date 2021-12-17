@@ -1,0 +1,25 @@
+def count_words(str):
+    words = str.split()
+    res = {}
+    for i in words:
+        res[i] = words.count(i)
+    return res
+
+
+def max_occurence(str):
+    d = count_words(str)
+    v = list(d.values())
+    k = list(d.keys())
+    return k[v.index(max(v))]
+
+
+def main():
+    input_string = input()
+    dic = count_words(input_string)
+    print(dic)
+    st = max_occurence(input_string)
+    print(st)
+
+
+if __name__ == '__main__':
+    main()
