@@ -1,0 +1,54 @@
+class Employee:
+    def __init__(self, empno, empname, leaves):
+        self.empno = empno
+        self.empname = empname
+        self.leaves = leaves
+
+
+class Company:
+    def __init__(self, cname, emps):
+        self.cname = cname
+        self.emps = emps
+
+    def display_leave(self, eno, lvtyp):
+        for emp in self.emps:
+            if emp.empno == eno:
+                return emp.leaves[lvtyp]
+
+    def leave_application(self, eno, lvtyp, nolv):
+        ch = 0
+        for emp in self.emps:
+            ch = 0
+            if emp.empno == eno:
+                if nolv >= emp.leaves[lvtyp]:
+                    ch = 1
+                else:
+                    ch = 0
+        if ch:
+            return "Granted"
+        else:
+            return "Rejected"
+
+
+
+def main():
+    n =int(input("Enter the number of Employees: "))
+    c = Company("ABC", emps = [])
+    for i in range(n):
+        leaves = {}
+        eno = int(input(f"Enter the Employee No. for {i+1} Employee: "))
+        ename = input(f"Enter the Employee Name for {i+1} Employee: ")
+        leaves["CL"] = int(input("Enter the No.of leaves of type CL: "))
+        leaves["EL"] = int(input("Enter the No.of leaves of type EL: "))
+        leaves["SL"] = int(input("Enter the No.of leaves of type SL: "))
+        e = Employee(eno, ename, leaves)
+        c.emps.append(e)
+    empno = int(input("Enter the EmployeeNo. for the leave: "))
+    ltyp = input("Enter the leave type for the leave: ")
+    nol = int(input(f"Enter the No.of leaves of type {ltyp}: "))
+    print()
+    print(c.display_leave(empno, ltyp))
+    print(c.leave_application(empno, ltyp, nol))
+
+
+if __name__ == '__main__': main()
