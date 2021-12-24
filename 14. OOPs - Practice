@@ -1,0 +1,51 @@
+class Item:
+    def __init__(self, item_id, item_name, item_price, quantity_avl):
+        self.item_id = item_id
+        self.item_name = item_name
+        self.item_price = item_price
+        self.quantity_available = quantity_avl
+
+    def calculate_price(self, qnt):
+        if self.quantity_available >= qnt:
+            self.quantity_available -= qnt
+            return qnt*self.item_price
+        else:
+            return 0
+
+
+class Store:
+    def __init__(self, item_list):
+        self.item_list = item_list
+
+    def generate_bill(self, req):
+        bill = 0
+        for i in req:
+            for j in self.item_list:
+                if i == j.item_name:
+                    bill += j.calculate_price(req[i])
+        return bill
+
+
+def main():
+    ilist = []
+    icount = int(input("Enter the count of the elements: "))
+    for i in range(icount):
+        id = int(input(f"Enter the Id of the Item {i+1}: "))
+        name = input(f"Enter the Name of the Item {i+1}: ")
+        price = int(input(f"Enter the price of the Item {i+1}: "))
+        quant = int(input(f"Enter the quantity of the Item {i+1}: "))
+        i = Item(id,name,price,quant)
+        ilist.append(i)
+    s = Store(ilist)
+    inp = {}
+    inp_count = int(input("Enter the count of the elements for bill: "))
+    for i in range(inp_count):
+        name = input(f"Enter the name of the Item {i+1} for bill: ")
+        quantity = int(input(f"Enter the quantity of the Item {i+1} for bill: "))
+        inp[name] = quantity
+    print(ilist[0].calculate_price(2))
+    print(s.generate_bill(inp))
+
+
+if __name__ == "__main__":
+    main()
