@@ -1,0 +1,36 @@
+def check_prime(num):
+    flag = 1
+    if num > 1:
+        for i in range(2, num // 2):
+            if num % i == 0:
+                flag = 0
+                break
+            else:
+                flag = 1
+    return flag
+
+
+def prime_composite_list(li):
+    prime = []
+    composite = []
+    for i in li:
+        if check_prime(i) == 1:
+            prime.append(i)
+        elif check_prime(i) == 0:
+            composite.append(i)
+    res = [prime, composite]
+    return res
+
+
+def main():
+    inp = []
+    count = int(input("Enter the count of the numbers: "))
+    for i in range(count):
+        inp.append(int(input(f"Enter the {i+1} element: ")))
+    print("The list of the elements in prime and composite list: ")
+    result = prime_composite_list(inp)
+    print(result)
+
+
+if __name__ == "__main__":
+    main()
