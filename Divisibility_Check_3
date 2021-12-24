@@ -1,0 +1,18 @@
+def check(num):
+    sd = 0
+    while num > 0:
+        sd += num % 10
+        num //= 10
+    if sd % 3 == 0:
+        return True
+    else:
+        return False
+
+
+def main():
+    n = int(input("Enter the number to check divisibility by 3: "))
+    print(check(n))
+
+
+if __name__ == "__main__":
+    main()
