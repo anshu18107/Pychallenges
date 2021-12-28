@@ -1,0 +1,7 @@
+#Take a string as input and enter the integer to start printing 
+# case-1: Print from middle till n if available
+# case-2: Print from middle till end of the string if not available
+s = input("Enter the string: ")
+n = len(s)
+x = int(input("Enter N to print from the middle: "))
+print(s[n//2-1:min(n,n//2+x-1)])
