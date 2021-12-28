@@ -1,0 +1,66 @@
+class Book:
+    def __init__(self, bid, bname, Aname):
+        self.book_id = bid
+        self.book_name = bname
+        self.author = Aname
+
+
+class Library(Book):
+    def __init__(self, blst, add):
+        self.bookList = blst
+        self.address = add
+
+    def findauthor(self):
+        result = {}
+        authlist = []
+        for book in self.bookList:
+            authlist.append(book.author.upper())
+        authorlist = list(set(authlist))
+        for author in authorlist:
+            result[author] = authlist.count(author)
+        return result
+
+
+def findbookType(citys, libList):
+    bookList1 = []
+    for lib in libList:
+        lib.bookList = sorted(lib.bookList,key=lambda bookList: bookList.book_id, reverse=True)
+        s = lib.address.get("city")
+        if s.lower() == citys.lower():
+            for book in lib.bookList:
+                bookList1.append(book.book_name)
+    return bookList1
+
+
+def main():
+    count = int(input("Enter the number of Libraries: "))
+    libList = []
+    for i in range(count):
+        bList = []
+        address = {}
+        count1 = int(input("Enter the number of Books: "))
+        for i in range(count1):
+            bookId = int(input(f"Enter the {i+1} BookId: "))
+            bookName = input(f"Enter the {i+1} BookName: ")
+            authorName = input(f"Enter the {i+1} BookAuthorName: ")
+            bList.append(Book(bookId,bookName,authorName))
+        address["street"] = input(f"Enter the address-street: ")
+        address["area"] = input(f"Enter the address-area: ")
+        address["city"] = input(f"Enter the address-city: ")
+        address["state"] = input(f"Enter the address-state: ")
+        address["zip"] = input(f"Enter the address-zip: ")
+        libList.append(Library(bList,address))
+    city = input("Enter the city to look-for: ")
+    obj1 = libList[0]
+    outDict = obj1.findauthor()
+    for author in sorted(outDict.keys()):
+        print(author,outDict[author])
+    bookList = findbookType(city,libList)
+    if len(bookList) == 0:
+        print("No book Found. ")
+    else:
+        print(bookList)
+
+
+if __name__ == "__main__":
+    main()
