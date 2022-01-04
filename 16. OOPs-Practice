@@ -1,0 +1,70 @@
+class Person:
+    def __init__(self, name, height, weight, bmi=0, bmi_status=""):
+        self.name = name
+        self.height = height
+        self.weight = weight
+        self.bmi = bmi
+        self.bmi_status = bmi_status
+
+    def calculateBmi(self):
+        self.bmi = round(self.weight / (self.height * self.height))
+
+
+class Society(Person):
+    def __init__(self, bmi_stats, plst):
+        self.bmi_stats = bmi_stats
+        self.plst = plst
+
+    def calculateBmiAndStatusByName(self, name):
+        for pers in self.plst:
+            if name == pers.name:
+                pers.calculateBmi()
+                for k, v in self.bmi_stats.items():
+                    if v[0] < pers.bmi < v[1]:
+                        pers.bmi_status = k
+                        return True
+        return False
+
+    def removepers(self, vbmi):
+        lst = []
+        for i in self.plst:
+            if i.bmi < vbmi:
+                lst.append(i)
+        return lst
+
+
+def main():
+    p = int(input("Enter the No.of Persons: "))
+    plst = []
+    for i in range(p):
+        name = input(f"Enter the Name of Person {i + 1}: ")
+        h = int(input(f"Enter the Height of Person {i + 1}: "))
+        w = int(input(f"Enter the Weight of Person {i + 1}: "))
+        plst.append(Person(name, h, w, 0, ""))
+    n = int(input("Enter the no.of BMI-Status to take input: "))
+    bstat = {}
+    for i in range(n):
+        bs = input("Enter the BMI-status: ")
+        lb = int(input("Enter the min BMI value: "))
+        ub = int(input("Enter the max BMI Value: "))
+        if lb > ub:
+            lb, ub = ub, lb
+        bstat[bs] = (lb, ub)
+    ob = Society(bstat, plst)
+    ng = input("Enter the Name of the Person to calculate BMI: ")
+    p = ob.calculateBmiAndStatusByName(ng)
+    if p:
+        for i in plst:
+            if i.bmi != 0 and i.name.lower() == ng.lower():
+                print(i.bmi, i.bmi_status)
+    else:
+        print("No Person Exists")
+
+    bg = int(input("Enter the Value of the BMI to remove the persons with less BMI: "))
+    v = ob.removepers(bg)
+    for k in v:
+        print(k.name, k.bmi)
+
+
+if __name__ == "__main__":
+    main()
