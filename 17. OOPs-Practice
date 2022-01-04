@@ -1,0 +1,47 @@
+class Blood:
+    def __init__(self, blooddgrp, unittInHand):
+        self.bloodgrp = blooddgrp.upper()
+        self.unitInHand = unittInHand
+
+
+class BloodBank(Blood):
+    def __init__(self, bloodlst):
+        self.bloodlst = bloodlst
+
+    def isBloodAvailable(self, str, n):
+        for bld in self.bloodlst:
+            if bld.bloodgrp == str.upper() and bld.unitInHand >= n:
+                flag = 1
+                bld.unitInHand -= n
+                return True
+        return False
+    def findMinBloodStock(self):
+        minunits = self.bloodlst[0].unitInHand
+        bldlst = []
+        for bld in self.bloodlst:
+            if bld.unitInHand < minunits:
+                minunits = bld.unitInHand
+        for bld in self.bloodlst:
+            if bld.unitInHand == minunits:
+                bldlst.append(bld.bloodgrp)
+        return bldlst
+
+
+if __name__ == "__main__":
+    bloodlst = []
+    n = int(input("Enter the no.of BloodGrps: "))
+    for i in range(n):
+        bldgrp = input(f"Enter the Blood Group of {i+1} Person: ")
+        bldu = int(input(f"Enter the Blood Group Units of {i+1} Person: "))
+        bloodlst.append(Blood(bldgrp,bldu))
+    bldbank = BloodBank(bloodlst)
+    bld = input("Enter the Blood Group to check availability: ")
+    unit = int(input("Enter the units of the Blood Grp required: "))
+    if bldbank.isBloodAvailable(bld,unit):
+        print("Blood Available.")
+    else:
+        print("Blood not Available.")
+    lst = bldbank.findMinBloodStock()
+    for i in lst:
+        print("The list of min units of blood group: ")
+        print(i)
