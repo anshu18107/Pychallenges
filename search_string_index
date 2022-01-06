@@ -1,0 +1,23 @@
+def check(lst, stri):
+    for s in lst:
+        if s.lower() == stri.lower():
+            return lst.index(s)
+    return -1
+
+
+def main():
+    n = int(input("Enter N: "))
+    lst = []
+    for i in range(n):
+        stri = input(f"Enter the {i+1} string: ")
+        lst.append(stri)
+    stri = input("Enter the string to search: ")
+    t = check(lst,stri)
+    if t:
+        print("Position of the string is: " + str(t))
+    else:
+        print("String not found")
+
+
+if __name__ == "__main__":
+    main()
