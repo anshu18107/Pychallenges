@@ -1,0 +1,60 @@
+class Account:
+    def __init__(self, cdno, pin, bal, wdamt, actyp):
+        self.cdno = cdno
+        self.pin = pin
+        self.bal = bal
+        self.wdamt = wdamt
+        self.actyp = actyp
+
+    def calc1(self, wdamt):
+        if wdamt <= bal:
+            self.bal -= wdamt
+            self.wdamt = wdamt
+
+
+class ATM(Account):
+    def __init__(self, bname, actlst):
+        self.bname = bname
+        self.actlst = actlst
+
+    def calc2(self, cdno, pin, wdamt):
+        for act in actlst:
+            if act.cdno == cdno and act.pin == pin:
+                act.calc1(wdamt)
+                return act
+        return None
+
+    def calc3(self, actyp):
+        dct = {}
+        for act in actlst:
+            if act.actyp == actyp:
+                dct[act.cdno] = act.bal
+        sorted(dct.items(), key=lambda x: x[1])
+        return dct
+
+
+if __name__ == "__main__":
+    actlst = []
+    n = int(input("Enter the no.of Accounts: "))
+    for i in range(n):
+        cdno = int(input(f"Enter the Card Number for {i+1} account: "))
+        pin = int(input(f"Enter the Pin for {i+1} account: "))
+        bal = float(input(f"Enter the Balance for {i+1} account: "))
+        wdamt = float(input(f"Enter the With-Drawl Amount  for {i+1} account: "))
+        actyp = input(f"Enter the Account Type for {i+1} account: ")
+        actlst.append(Account(cdno, pin, bal, wdamt, actyp))
+    o = ATM("TCS", actlst)
+    cdno = int(input("Enter Card Number for with-drawl: "))
+    pin = int(input("Enter the Pin for with-drawl: "))
+    wdamt = float(input("Enter with-drawl amount: "))
+    actyp = input("Enter account type: ")
+    res = o.calc2(cdno, pin, wdamt)
+    if res == None:
+        print("No account Exists")
+    else:
+        print(res.cdno, res.bal, res.wdamt)
+    d = o.calc3(actyp)
+    if bool(d) == False:
+        print("No match found")
+    for i in d:
+        print(i, d[i])
