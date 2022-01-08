@@ -1,0 +1,160 @@
+#METHOD-1
+
+class City:
+    def __init__(self, cid, sname, cname, covbed, avlcovbed, venbed, avlvenbed):
+        self.city_id = cid
+        self.state_name = sname
+        self.city_name = cname
+        self.covidbeds = covbed
+        self.avlcovbeds = avlcovbed
+        self.ventilbeds = venbed
+        self.avlventilbeds = avlvenbed
+
+
+class CovBedsAnalysis:
+    def __init__(self, analysis_name, city_lst):
+        self.analysis_name = analysis_name
+        self.city_lst = city_lst
+
+    def get_StateWiseAvlBedStats(self):
+        l = []
+        res = []
+        for c in self.city_lst:
+            l.append(c.state_name)
+            lst = list(set(l))
+            lst.sort()
+            for s in lst:
+                cov = 0
+                ven = 0
+                for c in self.city_lst:
+                    if c.state_name.lower() == s.lower():
+                        cov += c.avlcovbeds
+                        ven += c.avlventilbeds
+                res.append((s, cov, ven))
+            res = list(set(res))
+        return res
+
+    def get_CitiesWithMoreThanAvgOccupiedbeds(self, state):
+        res = {}
+        cov = 0
+        ven = 0
+        cnt = 0
+        for c in self.city_lst:
+            if c.state_name.lower() == state.lower():
+                cov += (c.covidbeds - c.avlcovbeds)
+                ven += (c.ventilbeds - c.avlventilbeds)
+                cnt += 1
+            cov /= cnt
+            ven /= cnt
+            for c in self.city_lst:
+                if c.state_name.lower() == state.lower():
+                    if (c.covidbeds - c.avlcovbeds) > cov and (c.ventilbeds - c.avlventilbeds) > ven:
+                        res[c.city_name] = ((c.covidbeds - c.avlcovbeds), (c.ventilbeds - c.avlventilbeds))
+        return res
+
+
+def main():
+    count = int(input("Enter the No.of Cities to enter: "))
+    city_lst = []
+    for i in range(count):
+        cid = int(input(f"Enter the City_ID of city {i+1}: "))
+        sname = input(f"Enter the State_Name of the city {i+1}: ")
+        cname = input(f"Enter the City_Name of the city {i+1}: ")
+        covbed = int(input(f"Enter the No.of Covid_Beds of the city {i+1}: "))
+        avlcovbed = int(input(f"Enter the No.of Avl_Covid_Beds of the city {i+1}: "))
+        venbed = int(input(f"Enter the No.of Ventilator_Beds of the city {i+1}: "))
+        avlvenbed = int(input(f"Enter the No.of Avl_Ventilator_Beds of the city {i+1}: "))
+        city_lst.append(City(cid, sname, cname, covbed, avlcovbed, venbed, avlvenbed))
+    obj = CovBedsAnalysis("TCS",city_lst)
+    res = obj.get_StateWiseAvlBedStats()
+    state = input("Enter the state to know the cities having more than the avg beds: ")
+    res1 = obj.get_CitiesWithMoreThanAvgOccupiedbeds(state)
+    print(res)
+    print(res1)
+
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+#METHOD-2
+
+
+class City:
+    def __init__(self, cid, sname, cname, covbed, avlcovbed, venbed, avlvenbed):
+        self.city_id = cid
+        self.state_name = sname
+        self.city_name = cname
+        self.covidbeds = covbed
+        self.avlcovbeds = avlcovbed
+        self.ventilbeds = venbed
+        self.avlventilbeds = avlvenbed
+
+
+class CovBedsAnalysis:
+    def __init__(self, analysis_name, city_lst):
+        self.analysis_name = analysis_name
+        self.city_lst = city_lst
+
+    def get_StateWiseAvlBedStats(self):
+        l = []
+        res = []
+        for c in self.city_lst:
+            l.append(c.state_name)
+            lst = list(set(l))
+            lst.sort()
+            for s in lst:
+                cov = 0
+                ven = 0
+                for c in self.city_lst:
+                    if c.state_name.lower() == s.lower():
+                        cov += c.avlcovbeds
+                        ven += c.avlventilbeds
+                res.append((s, cov, ven))
+            res = list(set(res))
+        return res
+
+    def get_CitiesWithMoreThanAvgOccupiedbeds(self, state):
+        res = {}
+        cov = 0
+        ven = 0
+        cnt = 0
+        for c in self.city_lst:
+            if c.state_name.lower() == state.lower():
+                cov += (c.covidbeds - c.avlcovbeds)
+                ven += (c.ventilbeds - c.avlventilbeds)
+                cnt += 1
+            cov /= cnt
+            ven /= cnt
+            for c in self.city_lst:
+                if c.state_name.lower() == state.lower():
+                    if (c.covidbeds - c.avlcovbeds) > cov and (c.ventilbeds - c.avlventilbeds) > ven:
+                        res[c.city_name] = ((c.covidbeds - c.avlcovbeds), (c.ventilbeds - c.avlventilbeds))
+        return res
+
+
+def main():
+    count = int(input("Enter the No.of Cities to enter: "))
+    city_lst = []
+    for i in range(count):
+        cid = int(input(f"Enter the City_ID of city {i+1}: "))
+        sname = input(f"Enter the State_Name of the city {i+1}: ")
+        cname = input(f"Enter the City_Name of the city {i+1}: ")
+        covbed = int(input(f"Enter the No.of Covid_Beds of the city {i+1}: "))
+        avlcovbed = int(input(f"Enter the No.of Avl_Covid_Beds of the city {i+1}: "))
+        venbed = int(input(f"Enter the No.of Ventilator_Beds of the city {i+1}: "))
+        avlvenbed = int(input(f"Enter the No.of Avl_Ventilator_Beds of the city {i+1}: "))
+        city_lst.append(City(cid, sname, cname, covbed, avlcovbed, venbed, avlvenbed))
+    obj = CovBedsAnalysis("TCS",city_lst)
+    res = obj.get_StateWiseAvlBedStats()
+    state = input("Enter the state to know the cities having more than the avg beds: ")
+    res1 = obj.get_CitiesWithMoreThanAvgOccupiedbeds(state)
+    print(res)
+    print(res1)
+
+
+if __name__ == "__main__":
+    main()
