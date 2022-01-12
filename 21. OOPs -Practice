@@ -1,0 +1,46 @@
+class Book:
+    def __init__(self, id, title, price, pages, author):
+        self.id = id
+        self.title = title
+        self.price = price
+        self.pages = pages
+        self.author = author
+
+
+class BookStore(Book):
+    def __init__(self, bookStoreName, booklst):
+        self.bookStoreName = bookStoreName
+        self.booklst = booklst
+
+    def searchBookBypages(self, pages):
+        res = []
+        for b in self.booklst:
+            if b.pages == pages:
+                res.append(b.title)
+        return res
+
+    def countBookByauthor(self):
+        authorlst = []
+        for b in self.booklst:
+            authorlst.append(b.author)
+        auth = list(set(authorlst))
+        res = {}
+        for a in auth:
+            res[a] = authorlst.count(a)
+        return res
+
+
+if __name__ == "__main__":
+    n = int(input("Enter the No.of Books: "))
+    booklst = []
+    for i in range(n):
+        id = int(input(f"Enter the id of book {i + 1}: "))
+        title = input(f"Enter the title of book {i + 1}: ")
+        price = float(input(f"Enter the price of book {i + 1}: "))
+        pages = int(input(f"Enter the pages of book {i + 1}: "))
+        author = input(f"Enter the author of book {i + 1}: ")
+        booklst.append(Book(id, title, price, pages, author))
+    obj = BookStore("TCS", booklst)
+    pages = int(input("Enter the pages to search for books: "))
+    print(obj.searchBookBypages(pages))
+    print(obj.countBookByauthor())
