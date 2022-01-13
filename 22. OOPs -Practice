@@ -1,0 +1,43 @@
+class Team:
+    def __init__(self, owner, value, id_, name):
+        self.owner = owner
+        self.value = value
+        self.id_ = id_
+        self.name = name
+
+
+class League:
+    def __init__(self, leagueName, teamlst):
+        self.leagueName = leagueName
+        self.teamlst = teamlst
+
+    def findMinimumTeamById(self):
+        if len(self.teamlst):
+            mini = self.teamlst[0]
+            for i in self.teamlst:
+                if i.id_ < mini.id_:
+                    mini = i
+            return mini
+        else:
+            return None
+
+    def sortTeamById(self):
+        if len(self.teamlst):
+            return list(sorted(self.teamlst, key=lambda x: x.id_, reverse=False))
+        else:
+            return None
+
+
+if __name__ == "__main__":
+    n = int(input("Enter the number of Teams: "))
+    teamlst = []
+    for i in range(n):
+        owner = input(f"Enter the owner of the team {i + 1}: ")
+        value = float(input(f"Enter the value of the team {i + 1}: "))
+        id_ = int(input(f"Enter the id of the team {i + 1}: "))
+        name = input(f"Enter the name of the team {i + 1}: ")
+        teamlst.append(Team(owner, value, id_, name))
+    obj = League("INDIA",teamlst)
+    print(obj.findMinimumTeamById().id_)
+    for i in obj.sortTeamById():
+        print(i.name)
