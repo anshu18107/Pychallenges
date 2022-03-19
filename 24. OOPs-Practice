@@ -1,0 +1,336 @@
+'''
+In this post, we will see the solution of the Python Coding Question which is already asked in the TCS Xplore CPA Exam.
+
+Create a class Property with the below attributes:
+
+property_type -> String(house/land/real estate etc)
+property_value -> Number
+max_bid_price -> Number
+where property_type attribute is the type of property(like house/land/real estate etc) is unique, property_value attribute is the base price of the property and max_bid price attribute is the value for maximum bidding price.
+Assume, max_bid_price > property_value
+Create the __init__ method which takes as an argument the value for 3 attributes in the above sequence to initialize the attributes of the object created.
+
+Create a class Tender with the below attributes:
+
+buyerName -> String
+propertyType -> String
+bidPrice -> Number
+where buyerName attribute represents the name of the buyer, propertyType attribute represents the type of the property and bidPrice attribute represents the biding price.
+
+Create the __init__ method which takes as an argument the value for these attributes in the above sequence and initializes the attributes of the object created.
+
+Define the function – bidProperty. This function is not part of any class. This function will take as input parameters- a list of Property objects and a list of Tender objects.
+The function will check for each Tender in the list passed as the second argument the validity and return the names of the buyer’s in a list for all valid Tenders. If no valid Tender found, the function returns an Empty list.
+
+A Tender is considered valid only if the allowing conditions are fulfilled:
+
+The Property for the given property type in the Tender must be present in the Property list passed as first argument.
+For a given property type, only the Tender with the highest bidPrice will be considered (e.g in the list of Tenders if there are 3 Tender objects with property Type ‘land’ and the bid price 40000,50000 and 60000 respectively. In that case, the Tender with a bid price of 60000 will be considered).
+The bid price given in the Tender can not be lower than the property_value and higher than the max_bid price of the Property found.
+The function will remove the Property from the Property list passed as the first argument which fulfills the conditions 1 and 3 mentioned above (which is considered for bidding) and update the list.
+
+Note:
+
+Assume no two property in the Property list passed as the first argument to the function can have same property_type
+All the string comparisions are case insensitive
+This function should be called from the main section.
+Instructions to write the main section of the code:
+
+a) You would require to write the main section completely, hence please follow the below instructions for the same
+b) You would require to write the main program which is in line to the “sample input description section” mentioned below and to read the data in the same sequence.
+c) Create the respective object(Property and Tender) with the given sequence of arguments to fulfill the __init__ method requirement defined in the respective classes referring to the below instructions.
+
+1) Create a list of Property objects which will be provided to the bidProperty function as the first argument.
+a) Read a number for the count of Property objects to be created and added to the list.
+b) Create a Property object after reading the data related to it and add the object to the list of Property objects. This point repeats for the number of Property objects (considered in the first line of input) point #c.1.a
+2) Create a list of Tender objects which will be provided to the bidProperty function as the second argument
+a) Read a number for the count of Tender objects to be created and added to the list.
+b) Create a Tender object after reading the data related to it and add the object to the list of Tender objects. This point repeats for the number of Tender objects (considered in the first line of input) point #c.1 a
+c) Call the function bidProperty by passing the lists created in point #c.1 and #c.2 respectively.
+d) Print the names from the list returned by the function bidProperty. If the function returns Empty list, print “Property Not found” exluding the quotes
+e) Print the types of Property (property type) from the Property list updated by the function bidProperty.
+You can use/refer the below-given sample input and output to verify your solution using Test against Custom Input
+Sample Input (below) description:
+
+a. The 1st input taken in the main section is the number of Property objects to be added to the list of PropertyDealer.
+b. The next set of inputs are the property_type, property_value, max_bid_price for each Property object taken one after other and is repeated for number of Property objects given in the first line of input
+c. The next line of input is the count of Tender objects to be added to the list of Tender objects to be passed as argument to the bidProperty function.
+d. The next set of inputs are the are the values buyerName, property_Type and bidPrice for each Tender object taken one after other and is repeated for number of Tender objectsetiven in the point #c.
+Sample Test Cases:
+
+Input 1:
+4
+House
+500000
+700000
+Independent house
+1000000
+1200000
+Land
+4000000
+5000000
+flat
+7000000
+9000000
+5
+Susma
+land
+2000000
+Gautam
+land
+4500000
+Ankit
+land
+5000000
+Rahul
+flat
+10000000
+Deepak
+Mall
+800000000
+Output 1:
+Ankit
+House
+Independent house
+flat
+
+Input 2:
+4
+House
+500000
+700000
+Mall
+1000000
+1200000
+Land
+4000000
+5000000
+flat
+7000000
+9000000
+3
+Ankit
+land
+2000000
+Rahul
+flat
+890000
+Kavi
+mall
+110000
+
+Output 2:
+Property Not found
+House
+Mall
+Land
+flat
+'''
+
+
+# Create a Property class
+# with its attributes
+class Property:
+    # Define a constructor method
+    # for initializing its attributes
+    """
+    pType for property_type
+    pValue for property_value
+    max_Bprice for max_bid_price
+    """
+
+    def __init__(self, arg1, arg2, arg3):
+        self.pType = arg1
+        self.pValue = arg2
+        self.max_Bprice = arg3
+
+
+# Create a Tender class
+# with its attributes
+class Tender:
+    # Define a constructor method
+    # for initializing its attributes
+
+    """
+    bName for buyerName
+    pType for propertyType
+    bPrice for bidPrice
+    """
+
+    def __init__(self, arg1, arg2, arg3):
+        self.bName = arg1
+        self.pType = arg2
+        self.bPrice = arg3
+
+
+# Define a bidProperty function
+# This function will take as input
+# parameter- a list of Property objects
+# and a list of Tender objects.
+# This will check for each Tender in
+# the list passed as the second argument
+# the validity and return the names of
+# the buyer's in a list for all valid
+# Tenders. If no valid Tender found,
+# function returns an empty list.
+# This function will also remove the Property
+# from the Property list passed
+# which fulfills the conditions 1 and 3 mentioned
+# (which is considered for bidding) and
+# update the list.
+def bidProperty(pObjs, tObjs):
+    # Empty list
+    # This list will store
+    # buyer names
+    nameList = []
+
+    # Empty set
+    # This set will store
+    # Property type
+    typeSet = set()
+
+    # Empty set
+    # This set will store
+    # objects which need
+    # to be removed from list
+    # of property objects
+    removeObj = set()
+
+    # Empty dictionary
+    # This dictionary will store
+    # updated values for the property type
+    # of the valid Tender objects
+    objDict = {}
+
+    for obj1 in tObjs:
+
+        for obj2 in pObjs:
+
+            # condition 1
+
+            # The Property for the given property
+            # type in the Tender must be present
+            # in the Property list passed as
+            # first argument.
+
+            # string comparisions are case insensitive
+            if obj1.pType.lower() == obj2.pType.lower():
+
+                # condition 2
+
+                # For a given property type, only the Tender
+                # with the highest bidPrice will be considered
+                if obj1.pType.lower() in objDict:
+
+                    if objDict[obj1.pType][1] < obj1.bPrice:
+                        # update the dictionary
+                        objDict[obj1.pType.lower()] = (obj1.bName, obj1.bPrice)
+
+                else:
+
+                    # assign the value to the property type
+                    objDict[obj1.pType.lower()] = (obj1.bName, obj1.bPrice)
+
+                # condition 3
+
+                # The bid price given in the Tender can not be lower than
+                # the property_value and higher than the max_bid price
+                # of the Property found.
+                if obj1.bPrice >= obj2.pValue and obj1.bPrice <= obj2.max_Bprice:
+                    typeSet.add(obj1.pType.lower())
+                    removeObj.add(obj2)
+
+    # Name add in the the list
+    for ptype in typeSet:
+        nameList.append(objDict[ptype][0])
+
+    # Removing the Property from
+    # the Property list which
+    # satisy condition 1 and 3
+    for obj in removeObj:
+        pObjs.remove(obj)
+
+    # return list of names
+    return nameList
+
+
+# Main program starts here
+if __name__ == "__main__":
+
+    # Read a number for the count
+    # of Property objects to be
+    # created and added to the list
+    n1 = int(input())
+
+    # List for storing
+    # Property objects
+    pObjs = []
+
+    # Create a n1 number of
+    # Property objects
+    for num in range(n1):
+        # reading the data related
+        # to Property object
+        property_type = input()
+        property_value = int(input())
+        max_bid_price = int(input())
+
+        # Create Property object with
+        # its attributes
+        pObj = Property(property_type,
+                        property_value,
+                        max_bid_price)
+
+        # adding Property object
+        # to the list
+        pObjs.append(pObj)
+
+    # Read a number for the count
+    # of Tender objects to be
+    # created and added to the list
+    n2 = int(input())
+
+    # List for storing
+    # Tender objects
+    tObjs = []
+
+    # Create a n2 number of
+    # Tender objects
+    for num in range(n2):
+        # reading the data related
+        # to Tender object
+        buyerName = input()
+        propertyType = input()
+        bidPrice = int(input())
+
+        # Create Tender object with its attributes
+        tObj = Tender(buyerName,
+                      propertyType,
+                      bidPrice)
+
+        # adding Tender object
+        # to the list
+        tObjs.append(tObj)
+
+    # bidProperty() function called
+    # This function return list of
+    # buyer names
+    returnValue = bidProperty(pObjs, tObjs)
+
+    # if list is not empty then
+    # print the names
+    # otherwise print msg
+    if len(returnValue):
+
+        for name in returnValue:
+            print(name)
+
+    else:
+        print("Property Not found")
+
+    # Print the property type from the
+    # Property list updated by the
+    # function bidProperty()
+    for obj in pObjs:
+        print(obj.pType)
+
